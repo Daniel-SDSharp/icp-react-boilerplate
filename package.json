@@ -29,7 +29,8 @@
     "react-redux": "^9.1.2",
     "react-router-dom": "^6.23.1",
     "sort-by": "^1.2.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "hpl-middleware-wallet": "git+ssh://git@github.com/SDS-Timo/hpl-middleware-wallet#develop"
   },
   "devDependencies": {
     "@eslint/js": "^9.3.0",
