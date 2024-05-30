@@ -1,18 +1,19 @@
 {
   "canisters": {
-    "backend": {
-      "main": "src/backend/main.mo",
-      "type": "motoko"
+    "db": {
+      "main": "db-canister/main.mo",
+      "type": "motoko",
+      "optimize": "cycles",
+      "declarations": {
+        "output": "src/database/candid"
+      }
     },
     "frontend": {
-      "dependencies": [
-        "backend"
-      ],
       "source": [
-        "src/frontend/dist"
+        "src/dist"
       ],
       "type": "assets",
-      "workspace": "frontend"
+      "workspace": "src"
     }
   },
   "defaults": {
