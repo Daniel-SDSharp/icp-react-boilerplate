@@ -1,0 +1,32 @@
+type WalletDatabase = 
+ service {
+   doesStorageExist: () -> (bool) query;
+   dump: () ->
+    (vec
+      record {
+        principal;
+        record {
+          vec opt AssetDocument;
+          vec opt ContactDocument;
+        };
+      }) query;
+   pullAssets: (nat32, opt text, nat) -> (vec AssetDocument) query;
+   pullContacts: (nat32, opt text, nat) -> (vec ContactDocument) query;
+   pushAssets: (vec AssetDocument) -> (vec AssetDocument);
+   pushContacts: (vec ContactDocument) -> (vec ContactDocument);
+ };
+type ContactDocument = 
+ record {
+   deleted: bool;
+   id: text;
+   payload: text;
+   updatedAt: nat32;
+ };
+type AssetDocument = 
+ record {
+   deleted: bool;
+   id: text;
+   payload: text;
+   updatedAt: nat32;
+ };
+service : () -> WalletDatabase
