@@ -49,7 +49,7 @@ const Contact = z.object({
   name: z.string(),
   principal: z.string(),
   assets: z.array(AssetContactSchema),
-  accountIdentier: z.string().optional(),
+  accountId: z.string().optional(),
 });
 
 export type Contact = z.infer<typeof Contact>;

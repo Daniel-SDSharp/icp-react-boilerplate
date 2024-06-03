@@ -1,4 +1,3 @@
-// TODO: ADD TSDocs
 import { UpdateAssetHandler } from "hpl-middleware-wallet/src/core/assetHandlers/update.asset.handler";
 import { AddAssetHandler } from "hpl-middleware-wallet/src/core/assetHandlers/add.asset.handler";
 import { RemoveAssetHandler } from "hpl-middleware-wallet/src/core/assetHandlers/remove.asset.handler";
@@ -10,8 +9,12 @@ import { SubAccountBalanceHandler } from "hpl-middleware-wallet/src/core/icrcCac
 import { LoadAssetHandler } from "hpl-middleware-wallet/src/core/internalHandlers/load.asset.handler";
 import { jsonStringify } from "hpl-middleware-wallet/src/repositories/base/baseDataStorage";
 
-export const getAssetsHandler = async ({ dependencies }: IGetAssetsHandler) => {
-
+/**
+ * Gets the list of assets.
+ * @param {IGetAssetsHandler} params - Parameters for getting assets.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ */
+export const getAssetsHandler = async ({ dependencies }: IGetAssetsHandler): Promise<void> => {
   const assetMetaDataHandler = new AssetMetaDataHandler(dependencies.identifierService, dependencies.localCache);
   const assetTransactionFeeHandler = new AssetTransactionFeeHandler(dependencies.identifierService, dependencies.localCache);
   const subAccountBalanceHandler = new SubAccountBalanceHandler(dependencies.identifierService, dependencies.localCache);
@@ -24,7 +27,6 @@ export const getAssetsHandler = async ({ dependencies }: IGetAssetsHandler) => {
   });
 
   let marketList = result.data?.assets.map((a: any) => {
-
     return {
       ...a,
       logo: ""
@@ -33,15 +35,18 @@ export const getAssetsHandler = async ({ dependencies }: IGetAssetsHandler) => {
 
   if (result.isSucess) {
     console.log(jsonStringify(result));
-  }
-  else {
+  } else {
     console.log(jsonStringify(result));
   }
 }
 
-
-export const addAssets = async ({ dependencies, contractAddress }: IAddAsset) => {
-
+/**
+ * Adds an asset.
+ * @param {IAddAsset} params - Parameters for adding an asset.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ * @param {string} params.contractAddress - Contract address of the asset.
+ */
+export const addAssets = async ({ dependencies, contractAddress }: IAddAsset): Promise<void> => {
   const loadAssetHandler = new LoadAssetHandler(dependencies.assetManagerConfiguration,
     new AssetMetaDataHandler(dependencies.identifierService, dependencies.localCache),
     new AssetTransactionFeeHandler(dependencies.identifierService, dependencies.localCache),
@@ -71,42 +76,51 @@ export const addAssets = async ({ dependencies, contractAddress }: IAddAsset) =>
 
   if (result.isSucess) {
     console.log(jsonStringify(result));
-  }
-  else {
+  } else {
     console.log(jsonStringify(result));
   }
 }
 
-export const removeAssets = async ({ dependencies, address }: IRemoveAsset) => {
-
+/**
+ * Removes an asset.
+ * @param {IRemoveAsset} params - Parameters for removing an asset.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ * @param {string} params.address - Address of the asset.
+ */
+export const removeAssets = async ({ dependencies, address }: IRemoveAsset): Promise<void> => {
   const handler = new RemoveAssetHandler(dependencies.assetRepository, dependencies.contactRepository, dependencies.localCache);
 
   const result = await handler.handle({ address: address });
 
   if (result.isSucess) {
     console.log(jsonStringify(result));
-  }
-  else {
+  } else {
     console.log(jsonStringify(result));
   }
 }
 
-export const updateAssets = async ({ dependencies, address, name, shortDecimal, symbol }: IUpdateAsset) => {
-
+/**
+ * Updates an asset.
+ * @param {IUpdateAsset} params - Parameters for updating an asset.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ * @param {string} params.address - Address of the asset.
+ * @param {string} params.name - Name of the asset.
+ * @param {number} params.shortDecimal - Short decimal value of the asset.
+ * @param {string} params.symbol - Symbol of the asset.
+ */
+export const updateAssets = async ({ dependencies, address, name, shortDecimal, symbol }: IUpdateAsset): Promise<void> => {
   const handler = new UpdateAssetHandler(dependencies.assetRepository);
 
-  const result = await handler.handle(
-    {
-      contractAddress: address,
-      assetName: name,
-      shortDecimal: shortDecimal,
-      symbol: symbol
-    });
+  const result = await handler.handle({
+    contractAddress: address,
+    assetName: name,
+    shortDecimal: shortDecimal,
+    symbol: symbol
+  });
 
   if (result.isSucess) {
     console.log(jsonStringify(result));
-  }
-  else {
+  } else {
     console.log(jsonStringify(result));
   }
 }

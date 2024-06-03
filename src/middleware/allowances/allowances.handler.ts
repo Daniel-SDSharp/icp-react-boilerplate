@@ -7,7 +7,20 @@ import { UpdateAllowanceHandler } from "hpl-middleware-wallet/src/core/allowance
 import { IAddAllowance, ICheckAllowance, IGetListAllowance, IRemoveAllowance, ITransferFromAllowance, IUpdateAllowance } from "./allowances.interface"
 import { jsonStringify } from "hpl-middleware-wallet/src/repositories/base/baseDataStorage"
 
-export const addAllowanceHandler = async ({ dependencies, assetAddress, subAccountId, spenderPrincipal, amount, decimal, expiration, isNoExpiration, supportedStandards }: IAddAllowance) => {
+/**
+ * Handles adding an allowance.
+ * @param {IAddAllowance} params - Parameters for adding an allowance.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ * @param {string} params.assetAddress - Address of the asset.
+ * @param {string} params.subAccountId - ID of the sub-account.
+ * @param {string} params.spenderPrincipal - Principal of the spender.
+ * @param {number} params.amount - Amount of the allowance.
+ * @param {number} params.decimal - Decimal value of the asset.
+ * @param {string} [params.expiration] - Expiration date of the allowance.
+ * @param {boolean} params.isNoExpiration - Flag indicating whether the allowance has no expiration.
+ * @param {SupportedStandardEnum[]} params.supportedStandards - Supported standards for the allowance.
+ */
+export const addAllowanceHandler = async ({ dependencies, assetAddress, subAccountId, spenderPrincipal, amount, decimal, expiration, isNoExpiration, supportedStandards }: IAddAllowance): Promise<void> => {
   const handler = new AddAllowanceHandler(dependencies.assetManagerConfiguration, dependencies.allowanceRepository)
 
   const result = await handler.handle({
@@ -22,7 +35,16 @@ export const addAllowanceHandler = async ({ dependencies, assetAddress, subAccou
   }
 }
 
-export const checkAllowanceHandler = async ({ dependencies, assetAddress, subAccountId, spenderPrincipal, decimal }: ICheckAllowance) => {
+/**
+ * Handles checking an allowance.
+ * @param {ICheckAllowance} params - Parameters for checking an allowance.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ * @param {string} params.assetAddress - Address of the asset.
+ * @param {string} params.subAccountId - ID of the sub-account.
+ * @param {string} params.spenderPrincipal - Principal of the spender.
+ * @param {number} params.decimal - Decimal value of the asset.
+ */
+export const checkAllowanceHandler = async ({ dependencies, assetAddress, subAccountId, spenderPrincipal, decimal }: ICheckAllowance): Promise<void> => {
   const handler = new CheckAllowanceHandler(dependencies.allowanceRepository)
 
   const result = await handler.handle({
@@ -37,7 +59,13 @@ export const checkAllowanceHandler = async ({ dependencies, assetAddress, subAcc
   }
 }
 
-export const getListAllowanceHandler = async ({ dependencies, assetAddress }: IGetListAllowance) => {
+/**
+ * Handles getting a list of allowances.
+ * @param {IGetListAllowance} params - Parameters for getting a list of allowances.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ * @param {string} params.assetAddress - Address of the asset.
+ */
+export const getListAllowanceHandler = async ({ dependencies, assetAddress }: IGetListAllowance): Promise<void> => {
   const handler = new GetListAllowanceHandler(dependencies.assetManagerConfiguration, dependencies.allowanceRepository, dependencies.assetRepository)
 
   const result = await handler.handle({
@@ -52,11 +80,15 @@ export const getListAllowanceHandler = async ({ dependencies, assetAddress }: IG
   }
 }
 
-export const removeAllowanceHandler = async ({ dependencies,
-  assetAddress,
-  subAccountId,
-  spenderPrincipal,
-}: IRemoveAllowance) => {
+/**
+ * Handles removing an allowance.
+ * @param {IRemoveAllowance} params - Parameters for removing an allowance.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ * @param {string} params.assetAddress - Address of the asset.
+ * @param {string} params.subAccountId - ID of the sub-account.
+ * @param {string} params.spenderPrincipal - Principal of the spender.
+ */
+export const removeAllowanceHandler = async ({ dependencies, assetAddress, subAccountId, spenderPrincipal }: IRemoveAllowance): Promise<void> => {
   const handler = new RemoveAllowanceHandler(dependencies.assetManagerConfiguration, dependencies.allowanceRepository);
 
   const result = await handler.handle({
@@ -73,7 +105,20 @@ export const removeAllowanceHandler = async ({ dependencies,
   }
 }
 
-export const transferFromAllowanceHandler = async ({ dependencies, receiverPrincipal, assetAddress, transferAmount, decimal, fromSubAccountId, toSubAccountId, senderPrincipal, transactionFee }: ITransferFromAllowance) => {
+/**
+ * Handles transferring from an allowance.
+ * @param {ITransferFromAllowance} params - Parameters for transferring from an allowance.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ * @param {string} params.receiverPrincipal - Principal of the receiver.
+ * @param {string} params.assetAddress - Address of the asset.
+ * @param {number} params.transferAmount - Amount to transfer.
+ * @param {number} params.decimal - Decimal value of the asset.
+ * @param {string} params.fromSubAccountId - ID of the sub-account from which to transfer.
+ * @param {string} params.toSubAccountId - ID of the sub-account to which to transfer.
+ * @param {string} params.senderPrincipal - Principal of the sender.
+ * @param {number} params.transactionFee - Transaction fee.
+ */
+export const transferFromAllowanceHandler = async ({ dependencies, receiverPrincipal, assetAddress, transferAmount, decimal, fromSubAccountId, toSubAccountId, senderPrincipal, transactionFee }: ITransferFromAllowance): Promise<void> => {
   const handler = new TransferFromAllowanceHandler(dependencies.allowanceRepository);
 
   const result = await handler.handle({
@@ -88,7 +133,21 @@ export const transferFromAllowanceHandler = async ({ dependencies, receiverPrinc
   }
 }
 
-export const updateAllowanceHandler = async ({ dependencies, id, assetAddress, subAccountId, spenderPrincipal, amount, decimal, expiration, isNoExpiration, supportedStandards }: IUpdateAllowance) => {
+/**
+ * Handles updating an allowance.
+ * @param {IUpdateAllowance} params - Parameters for updating an allowance.
+ * @param {IMiddlewareDependencies} params.dependencies - Middleware dependencies.
+ * @param {string} params.id - ID of the allowance.
+ * @param {string} params.assetAddress - Address of the asset.
+ * @param {string} params.subAccountId - ID of the sub-account.
+ * @param {string} params.spenderPrincipal - Principal of the spender.
+ * @param {number} params.amount - Amount of the allowance.
+ * @param {number} params.decimal - Decimal value of the asset.
+ * @param {string} [params.expiration] - Expiration date of the allowance.
+ * @param {boolean} params.isNoExpiration - Flag indicating whether the allowance has no expiration.
+ * @param {SupportedStandardEnum[]} params.supportedStandards - Supported standards for the allowance.
+ */
+export const updateAllowanceHandler = async ({ dependencies, id, assetAddress, subAccountId, spenderPrincipal, amount, decimal, expiration, isNoExpiration, supportedStandards }: IUpdateAllowance): Promise<void> => {
   const handler = new UpdateAllowanceHandler(dependencies.assetManagerConfiguration, dependencies.allowanceRepository);
 
   const result = await handler.handle({

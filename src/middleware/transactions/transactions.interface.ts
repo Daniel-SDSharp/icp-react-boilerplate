@@ -1,5 +1,4 @@
 import { Principal } from "@dfinity/principal";
-import { IMiddlewareDependencies } from "..";
 import { IBaseHandler } from "../../types/common";
 
 export interface IGetTransaction extends IBaseHandler {
