@@ -16,6 +16,21 @@ import { AllowanceCacheStorage } from "hpl-middleware-wallet/src/repositories/al
 
 // Middleware instance initialization 
 
+export interface IAssetManagerConfiguration {
+  ethMarketUrl: string,
+  tokenMarketUrl: string,
+  defaultDateTimeFormat: string
+}
+
+export interface ITransactionManagerConfiguration {
+  icpUrl: string,
+  ogyUrl: string,
+  icpNetwork: string,
+  ogyNetwork: string,
+  icpBlockchain: string,
+  ogyBlockchain: string
+}
+
 export interface IMiddlewareDependencies {
   allowanceRepository: AllowanceRepository;
   assetManager: AssetManager;
@@ -26,24 +41,15 @@ export interface IMiddlewareDependencies {
   identifierService: IdentifierService;
   localCache: LocalCacheRepository
   assetDataStorage: AssetDataStorage,
-  assetManagerConfiguration: {
-    ethMarketUrl: string,
-    tokenMarketUrl: string,
-  },
-  transactionManagerConfiguration: {
-    icpUrl: string,
-    ogyUrl: string,
-    icpNetwork: string,
-    ogyNetwork: string,
-    icpBlockchain: string,
-    ogyBlockchain: string
-  },
+  assetManagerConfiguration: IAssetManagerConfiguration,
+  transactionManagerConfiguration: ITransactionManagerConfiguration,
 }
 
 
 const assetManagerConfiguration = {
   ethMarketUrl: CONFIG.ETH_MARKET_URL,
   tokenMarketUrl: CONFIG.TOKEN_MARKET_URL,
+  defaultDateTimeFormat: "MM/DD/YYYY HH:mm"
 }
 
 const transactionManagerConfiguration = {
@@ -77,11 +83,11 @@ export const initializeMiddleware = async (identity: Identity): Promise<IMiddlew
   await assetDataStorage.initReplication();
   await contactDataStorage.initReplication();
 
-  const assetManager = new AssetManager({ ethMarketUrl: CONFIG.ETH_MARKET_URL, tokenMarketUrl: CONFIG.TOKEN_MARKET_URL }, identifierService);
+  const assetManager = new AssetManager({ ethMarketUrl: CONFIG.ETH_MARKET_URL, tokenMarketUrl: CONFIG.TOKEN_MARKET_URL, defaultDateTimeFormat: "MM/DD/YYYY HH:mm" }, identifierService);
   const assetRepository = new AssetRepository(assetDataStorage);
   const contactRepository = new ContactRepository(contactDataStorage);
   const transactionRepository = new TransactionRepository(identifierService);
-  const allowanceRepository = new AllowanceRepository(allowanceDataStorage, allowanceCacheStorage)
+  const allowanceRepository = new AllowanceRepository(identifierService, allowanceDataStorage, allowanceCacheStorage)
 
   return {
     allowanceRepository,

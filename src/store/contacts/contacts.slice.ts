@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { Contact } from './ContactModel';
-import { ErrorMessage, Status } from '../types';
+import { Contact } from '../../types/contacts';
+import { ErrorMessage, Status } from '../../types/transactions';
 
 interface ContactsState {
   contacts: Contact[]

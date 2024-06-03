@@ -1,4 +1,4 @@
-// ! TODO (middleware): These packages should be exported from a single module (contactHandlers) 
+// ! TODO (middleware): Would be great if these packages were exported from a single module (contactHandlers) 
 import { GetListContactHandler } from "hpl-middleware-wallet/src/core/contactHandlers/get.list.contact.handler"
 import { AddContactHandler } from "hpl-middleware-wallet/src/core/contactHandlers/add.contact.handler"
 import { RemoveContactHandler } from "hpl-middleware-wallet/src/core/contactHandlers/remove.contact.handler"
@@ -9,11 +9,12 @@ import { RemoveSubAccountContactHandler } from "hpl-middleware-wallet/src/core/c
 
 import { jsonStringify } from "hpl-middleware-wallet/src/repositories/base/baseDataStorage";
 import { IMiddlewareDependencies } from "..";
-import { IAddAssetToContact, IAddContact, IEditContact, IRemoveAssetFromContact, IRemoveContact, IRemoveSubAccountFromContact } from "./types";
+import { IAddAssetToContact, IAddContact, IEditContact, IRemoveAssetFromContact, IRemoveContact, IRemoveSubAccountFromContact } from "./contacts.interface"
 
-// TODO: SET RETURN TYPES
-// TODO: TSDoc 
-
+/**
+ * Gets contact list
+ * @param dependencies middleware dependencies 
+ */
 export const getContactsHandler = async (dependencies: IMiddlewareDependencies) => {
   const getListContactHandler = new GetListContactHandler(dependencies.assetManagerConfiguration, dependencies.contactRepository, dependencies.assetRepository, dependencies.allowanceRepository);
 
@@ -30,6 +31,15 @@ export const getContactsHandler = async (dependencies: IMiddlewareDependencies) 
 
 }
 
+/**
+ * Adds Contact 
+ * @param dependencies  
+ * @param principal  
+ * @param assetAddress  
+ * @param contactName  
+ * @param subAccountIndex  
+ * @param subAccountName  
+ */
 export const addContactHandler = async ({ dependencies, principal, assetAddress, contactName, subAccountIndex, subAccountName }: IAddContact) => {
   const handler = new AddContactHandler(dependencies.assetManagerConfiguration, dependencies.contactRepository);
 
@@ -50,9 +60,20 @@ export const addContactHandler = async ({ dependencies, principal, assetAddress,
     assets: assets
   });
 
-  console.log(jsonStringify(result));
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }
 
+/**
+ * Updates Contact  
+ * @param dependencies  
+ * @param principal  
+ * @param contactName  
+ */
 export const editContactHandler = async ({ dependencies, principal, contactName }: IEditContact) => {
   const handler = new EditContactHandler(dependencies.assetManagerConfiguration, dependencies.contactRepository);
 
@@ -61,9 +82,19 @@ export const editContactHandler = async ({ dependencies, principal, contactName 
     name: contactName,
   });
 
-  console.log(jsonStringify(result));
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }
 
+/**
+ * Removes Contact  
+ * @param dependencies  
+ * @param principal  
+ */
 export const removeContactHandler = async ({ dependencies, principal }: IRemoveContact) => {
   const handler = new RemoveContactHandler(dependencies.assetManagerConfiguration, dependencies.contactRepository);
 
@@ -71,9 +102,21 @@ export const removeContactHandler = async ({ dependencies, principal }: IRemoveC
     principal: principal,
   });
 
-  console.log(jsonStringify(result));
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }
 
+
+/**
+ * Removes asset from contact  
+ * @param dependencies  
+ * @param principal  
+ * @param assetAddress 
+ */
 export const removeAssetFromContactHandler = async ({ dependencies, principal, assetAddress }: IRemoveAssetFromContact) => {
 
   const handler = new RemoveAssetContactHandler(dependencies.assetManagerConfiguration, dependencies.contactRepository);
@@ -83,9 +126,20 @@ export const removeAssetFromContactHandler = async ({ dependencies, principal, a
     assetAddress: assetAddress
   });
 
-  console.log(jsonStringify(result));
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }
 
+/**
+ * Adds asset to contact  
+ * @param dependencies  
+ * @param principal  
+ * @param assetAddress 
+ */
 export const addAssetToContactHandler = async ({ dependencies, principal, assetAddress }: IAddAssetToContact) => {
 
   const handler = new AddAssetContactHandler(dependencies.assetManagerConfiguration, dependencies.contactRepository);
@@ -95,9 +149,21 @@ export const addAssetToContactHandler = async ({ dependencies, principal, assetA
     assetAddress: assetAddress
   });
 
-  console.log(jsonStringify(result));
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }
 
+/**
+ * Removes sub account from contact 
+ * @param dependencies  
+ * @param principal  
+ * @param assetAddress 
+ * @param subAccountIndex 
+ */
 export const removeSubAccountFromContactHandler = async ({ dependencies, principal, assetAddress, subAccountIndex }: IRemoveSubAccountFromContact) => {
 
   const handler = new RemoveSubAccountContactHandler(dependencies.assetManagerConfiguration, dependencies.contactRepository);
@@ -108,5 +174,10 @@ export const removeSubAccountFromContactHandler = async ({ dependencies, princip
     subAccountIndex: subAccountIndex
   });
 
-  console.log(jsonStringify(result));
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }

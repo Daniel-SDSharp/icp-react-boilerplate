@@ -3,8 +3,7 @@ import { UpdateAssetHandler } from "hpl-middleware-wallet/src/core/assetHandlers
 import { AddAssetHandler } from "hpl-middleware-wallet/src/core/assetHandlers/add.asset.handler";
 import { RemoveAssetHandler } from "hpl-middleware-wallet/src/core/assetHandlers/remove.asset.handler";
 import { GetListAssetHandler } from "hpl-middleware-wallet/src/core/assetHandlers/get.list.asset.handler";
-import { IAddAsset, IGetAssetsHandler, IRemoveAsset, IUpdateAsset } from "./types";
-
+import { IAddAsset, IGetAssetsHandler, IRemoveAsset, IUpdateAsset } from "./assets.interface";
 import { AssetMetaDataHandler } from "hpl-middleware-wallet/src/core/icrcCacheDataHandlers/asset.metaData.handler";
 import { AssetTransactionFeeHandler } from "hpl-middleware-wallet/src/core/icrcCacheDataHandlers/asset.transactionFee.handler";
 import { SubAccountBalanceHandler } from "hpl-middleware-wallet/src/core/icrcCacheDataHandlers/subAccount.balance.handler";
@@ -31,7 +30,13 @@ export const getAssetsHandler = async ({ dependencies }: IGetAssetsHandler) => {
       logo: ""
     };
   });
-  console.log(jsonStringify(marketList));
+
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }
 
 
@@ -64,7 +69,12 @@ export const addAssets = async ({ dependencies, contractAddress }: IAddAsset) =>
 
   await dependencies.assetDataStorage.syncDb();
 
-  console.log(jsonStringify(result));
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }
 
 export const removeAssets = async ({ dependencies, address }: IRemoveAsset) => {
@@ -73,7 +83,12 @@ export const removeAssets = async ({ dependencies, address }: IRemoveAsset) => {
 
   const result = await handler.handle({ address: address });
 
-  console.log(jsonStringify(result));
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }
 
 export const updateAssets = async ({ dependencies, address, name, shortDecimal, symbol }: IUpdateAsset) => {
@@ -88,5 +103,10 @@ export const updateAssets = async ({ dependencies, address, name, shortDecimal, 
       symbol: symbol
     });
 
-  console.log(jsonStringify(result));
+  if (result.isSucess) {
+    console.log(jsonStringify(result));
+  }
+  else {
+    console.log(jsonStringify(result));
+  }
 }

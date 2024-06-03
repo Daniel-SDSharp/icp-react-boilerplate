@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export const CONFIG = {
   TOKEN_MARKET_URL: "https://nftpkg.com/api/icpcoins/list",
   ETH_MARKET_URL: "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD",
@@ -10,10 +12,16 @@ export const CONFIG = {
   CANISTER_ID_BD: "bkyz2-fmaaa-aaaaa-qaaaq-cai",
 };
 
-export const STATUS = {
+export const REDUCER_STATUS = {
   LOADING: "LOADING",
   SUCCEEDED: "SUCCEEDED",
   IDLE: "IDLE",
   FAILED: "FAILED",
 }
 
+export const SENDING_STATUS = {
+  SENDING: "sending",
+  DONE: "done",
+  ERROR: "error",
+  NONE: "none",
+}
